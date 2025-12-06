@@ -26,7 +26,7 @@ def main() -> None:
     anonymize_parser.add_argument('-o', '--output', type=str, help='Ścieżka do pliku wyjściowego')
     anonymize_parser.add_argument('-c', '--config', type=str, help='Ścieżka do pliku konfiguracyjnego JSON')
     anonymize_parser.add_argument('-m', '--method', type=str, 
-                                   choices=['mask', 'pseudonymize', 'hash', 'redact', 'generalize', 'encrypt'],
+                                   choices=['mask', 'entity', 'pseudonymize', 'hash', 'redact', 'generalize', 'encrypt'],
                                    default='mask', help='Metoda anonimizacji')
     anonymize_parser.add_argument('--language', type=str, default='pl', help='Język dokumentu')
     anonymize_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')

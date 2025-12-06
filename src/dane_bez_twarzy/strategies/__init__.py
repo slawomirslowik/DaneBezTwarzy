@@ -93,6 +93,69 @@ class MaskStrategy(AnonymizationStrategy):
         return ''.join(result)
 
 
+class EntityStrategy(AnonymizationStrategy):
+    """Strategia zamiany na nazwę encji - zamienia dane na [NAZWA_ENCJI]."""
+    
+    def anonymize(self, text: str, entities: List[Entity]) -> str:
+        """Zamienia wykryte encje na ich typy w nawiasach kwadratowych."""
+        replacements = {}
+        
+        for entity in entities:
+            # Jeśli encja pochodzi z PlaceholderDetector i ma oryginalna nazwę
+            if entity.metadata and 'placeholder_name' in entity.metadata:
+                # Zachowaj oryginalną nazwę placeholdera z pliku (np. [name], [surname])
+                replacement = entity.metadata['placeholder_name']
+            else:
+                # W przeciwnym razie użyj nazwy typu encji
+                replacement = self._entity_type_to_placeholder(entity.type)
+            
+            replacements[entity.text] = replacement
+        
+        return self._replace_entities(text, entities, replacements)
+    
+    def _entity_type_to_placeholder(self, entity_type) -> str:
+        """
+        Konwertuje typ encji na format placeholder zgodny z nask_train/orig.txt.
+        
+        Args:
+            entity_type: Typ encji z EntityType enum.
+            
+        Returns:
+            Placeholder w formacie [nazwa].
+        """
+        # Mapowanie EntityType na nazwy placeholderów z nask_train/orig.txt
+        entity_to_placeholder = {
+            'PERSON': '[name] [surname]',  # Imię i nazwisko jako dwa placeholdery
+            'EMAIL': '[email]',
+            'PHONE': '[phone]',
+            'PESEL': '[pesel]',
+            'NIP': '[nip]',
+            'REGON': '[regon]',
+            'BANK_ACCOUNT': '[iban]',
+            'IBAN': '[iban]',
+            'CREDIT_CARD': '[credit-card]',
+            'ADDRESS': '[address]',
+            'DATE': '[date]',
+            'DATE_OF_BIRTH': '[birth-date]',
+            'ID_CARD': '[id-card]',
+            'PASSPORT': '[passport]',
+            'DRIVER_LICENSE': '[driver-license]',
+            'LICENSE_PLATE': '[license-plate]',
+            'IP_ADDRESS': '[ip-address]',
+            'URL': '[url]',
+            'ORGANIZATION': '[company]',
+            'LOCATION': '[city]',
+            'AGE': '[age]',
+            'SEX': '[sex]',
+            'USERNAME': '[username]',
+            'SECRET': '[password]',
+            'JOB_TITLE': '[job-title]',
+        }
+        
+        entity_value = entity_type.value if hasattr(entity_type, 'value') else str(entity_type)
+        return entity_to_placeholder.get(entity_value, f'[{entity_value.lower()}]')
+
+
 class PseudonymizeStrategy(AnonymizationStrategy):
     """Strategia pseudonimizacji - zamienia na konsystentne pseudonimy."""
     
@@ -260,6 +323,7 @@ def get_strategy(method: AnonymizationMethod, config: AnonymizationConfig) -> An
     """
     strategies = {
         AnonymizationMethod.MASK: MaskStrategy,
+        AnonymizationMethod.ENTITY: EntityStrategy,
         AnonymizationMethod.PSEUDONYMIZE: PseudonymizeStrategy,
         AnonymizationMethod.HASH: HashStrategy,
         AnonymizationMethod.REDACT: RedactStrategy,

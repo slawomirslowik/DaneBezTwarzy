@@ -17,6 +17,7 @@ class EntityType(str, Enum):
     NIP = "NIP"
     REGON = "REGON"
     BANK_ACCOUNT = "BANK_ACCOUNT"
+    IBAN = "IBAN"  # Numer konta bankowego IBAN
     CREDIT_CARD = "CREDIT_CARD"
     ADDRESS = "ADDRESS"
     DATE = "DATE"  # Ogólna data
@@ -40,6 +41,7 @@ class AnonymizationMethod(str, Enum):
     """Metody anonimizacji."""
     
     MASK = "mask"  # Maskowanie: Jan Kowalski -> *** ********
+    ENTITY = "entity"  # Zamiana na placeholder: Jan Kowalski -> [name] [surname]
     PSEUDONYMIZE = "pseudonymize"  # Pseudonimizacja: Jan Kowalski -> Osoba_A
     HASH = "hash"  # Haszowanie: Jan Kowalski -> a3f5b8c9...
     GENERALIZE = "generalize"  # Generalizacja: 01/15/1990 -> 1990

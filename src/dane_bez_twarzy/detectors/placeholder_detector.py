@@ -112,7 +112,8 @@ class PlaceholderDetector:
                     confidence=1.0,  # Placeholdery są zawsze pewne
                     metadata={
                         "detector": "placeholder",
-                        "pattern": pattern
+                        "pattern": pattern,
+                        "placeholder_name": match.group()  # Zachowaj oryginalną nazwę
                     }
                 )
                 entities.append(entity)
