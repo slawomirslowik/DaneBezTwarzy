@@ -1,0 +1,114 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dane-bez-twarzy"
+version = "0.1.0"
+description = "Biblioteka do anonimizacji danych osobowych w plikach"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["anonymization", "data-privacy", "GDPR", "PII", "data-protection"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    # Rozpoznawanie tekstu i NER (Named Entity Recognition)
+    "spacy>=3.7.0,<3.8.0",
+    "spacy-legacy>=3.0.11,<3.1.0",
+    "spacy-loggers>=1.0.0,<2.0.0",
+    
+    # Wyrażenia regularne dla polskiego języka
+    "regex>=2023.12.0",
+    
+    # Haszowanie i kryptografia
+    "cryptography>=41.0.0",
+    
+    # Obsługa różnych formatów plików
+    "pandas>=2.1.0",
+    "openpyxl>=3.1.0",  # Excel
+    "python-docx>=1.1.0",  # Word
+    "PyPDF2>=3.0.0",  # PDF
+    
+    # Wykrywanie języka
+    "langdetect>=1.0.9",
+    
+    # Walidacja danych - kompatybilna z spaCy
+    "pydantic>=2.0.0,<3.0.0",
+    
+    # Narzędzia pomocnicze
+    "tqdm>=4.66.0",  # Paski postępu
+    "colorlog>=6.8.0",  # Kolorowe logi
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.12.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+]
+
+ocr = [
+    # Opcjonalne: OCR dla obrazów i skanów
+    "pytesseract>=0.3.10",
+    "Pillow>=10.1.0",
+    "pdf2image>=1.16.3",
+]
+
+advanced-nlp = [
+    # Opcjonalne: Zaawansowane NLP
+    "transformers>=4.36.0",
+    "torch>=2.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/dane-bez-twarzy"
+Documentation = "https://dane-bez-twarzy.readthedocs.io"
+Repository = "https://github.com/yourusername/dane-bez-twarzy"
+Issues = "https://github.com/yourusername/dane-bez-twarzy/issues"
+
+[project.scripts]
+dane-bez-twarzy = "dane_bez_twarzy.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "--cov=dane_bez_twarzy --cov-report=html --cov-report=term-missing"

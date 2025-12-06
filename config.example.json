@@ -1,0 +1,21 @@
+{
+  "language": "pl",
+  "method": "pseudonymize",
+  "entities": [
+    "PERSON",
+    "EMAIL",
+    "PHONE",
+    "PESEL",
+    "NIP",
+    "BANK_ACCOUNT"
+  ],
+  "preserve_structure": true,
+  "mask_char": "*",
+  "seed": 12345,
+  "min_confidence": 0.7,
+  "use_nlp": true,
+  "nlp_model": "pl_core_news_lg",
+  "generate_report": true,
+  "verbose": false,
+  "log_level": "INFO"
+}
