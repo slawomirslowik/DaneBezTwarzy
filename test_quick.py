@@ -13,7 +13,8 @@ def test_basic():
     config = AnonymizationConfig(
         language="pl",
         method="mask",
-        use_nlp=False  # Bez spaCy - używamy tylko regex
+        use_nlp=False,  # Bez spaCy - używamy tylko regex (szybsze, bez limitu)
+        verbose=True    # Więcej informacji o przetwarzaniu
     )
     
     anonymizer = Anonymizer(config)

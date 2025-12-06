@@ -69,6 +69,28 @@ class NLPDetector:
         
         entities = []
         
+        # Sprawdź długość tekstu i podziel jeśli za długi
+        max_length = 1000000  # 1 milion znaków
+        
+        if len(text) > max_length:
+            self.logger.warning(
+                f"Tekst jest za długi ({len(text)} znaków). "
+                f"Przetwarzam w częściach po {max_length} znaków."
+            )
+            
+            # Podziel tekst na części
+            chunks = []
+            for i in range(0, len(text), max_length):
+                chunks.append(text[i:i + max_length])
+            
+            # Przetwórz każdą część
+            for i, chunk in enumerate(chunks):
+                offset = i * max_length
+                doc = self.nlp(chunk)
+                entities.extend(self._extract_entities(doc, offset))
+            
+            return entities
+        
         # Przetwórz tekst przez spaCy
         doc = self.nlp(text)
         
@@ -82,6 +104,32 @@ class NLPDetector:
         }
         
         # Wykryj nazwane encje
+        entities.extend(self._extract_entities(doc, 0))
+        
+        return entities
+    
+    def _extract_entities(self, doc, offset: int = 0) -> List[Entity]:
+        """
+        Wyciąga encje z dokumentu spaCy.
+        
+        Args:
+            doc: Dokument spaCy.
+            offset: Przesunięcie pozycji (dla chunków).
+            
+        Returns:
+            Lista encji.
+        """
+        entities = []
+        
+        # Mapowanie typów spaCy na nasze typy
+        spacy_to_entity_type = {
+            "PER": EntityType.PERSON,
+            "PERSON": EntityType.PERSON,
+            "ORG": EntityType.ORGANIZATION,
+            "LOC": EntityType.LOCATION,
+            "GPE": EntityType.LOCATION,
+        }
+        
         for ent in doc.ents:
             entity_type = spacy_to_entity_type.get(ent.label_)
             
@@ -89,9 +137,9 @@ class NLPDetector:
                 entity = Entity(
                     text=ent.text,
                     type=entity_type,
-                    start=ent.start_char,
-                    end=ent.end_char,
-                    confidence=0.85,  # spaCy nie zwraca confidence dla wszystkich modeli
+                    start=ent.start_char + offset,
+                    end=ent.end_char + offset,
+                    confidence=0.85,
                     metadata={
                         "detector": "nlp",
                         "spacy_label": ent.label_
