@@ -317,6 +317,38 @@ Biblioteka rozpoznaje m.in.:
 - **Jan Kowalski**, **Anna Nowak**, **Piotr Wiśniewski**
 - Wykrywane kontekstowo przez model spaCy `pl_core_news_lg`
 
+## 📋 Logowanie
+
+Biblioteka automatycznie loguje wszystkie operacje do:
+
+### Konsola (stdout)
+- Poziom: INFO (domyślnie) lub DEBUG (z flagą `-v`)
+- Kolorowe komunikaty (jeśli `colorlog` jest zainstalowane)
+- Format: `INFO     Wiadomość`
+
+### Plik: `dane_bez_twarzy.log`
+- Tworzony automatycznie w bieżącym katalogu
+- Zawsze loguje wszystkie poziomy (DEBUG i wyżej)
+- Format szczegółowy z timestampem, funkcją i numerem linii
+- **Rotacja**: maksymalnie 5 plików × 10 MB każdy
+
+**Przykład zawartości pliku logu:**
+```
+2025-12-06 15:30:45 - dane_bez_twarzy - INFO - anonymize_file:234 - Anonimizacja pliku: input.txt -> output.txt
+2025-12-06 15:30:46 - dane_bez_twarzy - DEBUG - detect:89 - Znaleziono 15 encji typu PERSON
+2025-12-06 15:30:47 - dane_bez_twarzy - INFO - anonymize_file:251 - Plik zanonimizowany: output.txt
+```
+
+**Pliki logów:**
+```
+dane_bez_twarzy.log       # Aktualny (do 10 MB)
+dane_bez_twarzy.log.1     # Poprzedni
+dane_bez_twarzy.log.2
+dane_bez_twarzy.log.3
+dane_bez_twarzy.log.4
+dane_bez_twarzy.log.5     # Najstarszy
+```
+
 ## 🤝 Wkład
 
 Zapraszamy do współpracy! Zobacz [CONTRIBUTING.md](CONTRIBUTING.md) #TODO
