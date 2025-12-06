@@ -152,10 +152,11 @@ class LLMDetector:
             chunk = text[start:end]
             
             chunk_num += 1
-            self.logger.info(f"Przetwarzanie fragmentu {chunk_num}: znaki {start}-{end}")
+            self.logger.info(f"Przetwarzanie fragmentu {chunk_num}: znaki {start}-{end} (długość: {len(chunk)})")
             
             # Wykryj encje w fragmencie
             chunk_entities = self._detect_chunk(chunk, start)
+            self.logger.info(f"LLM wykrył {len(chunk_entities)} encji we fragmencie {chunk_num}")
             
             # Dodaj encje, unikając duplikatów z overlappingu
             for entity in chunk_entities:
@@ -164,10 +165,15 @@ class LLMDetector:
                     all_entities.append(entity)
                     seen_entities.add(entity_key)
             
+            # Jeśli doszliśmy do końca, przerwij
+            if end >= len(text):
+                break
+            
             # Przesuń start z uwzględnieniem overlappingu
-            start = end - overlap if end < len(text) else end
+            # Upewnij się, że robimy postęp do przodu
+            start = max(start + 1, end - overlap)
         
-        self.logger.info(f"LLM wykrył {len(all_entities)} encji w {chunk_num} fragmentach")
+        self.logger.info(f"LLM zakończył przetwarzanie: {len(all_entities)} unikalnych encji w {chunk_num} fragmentach")
         return all_entities
     
     def _create_detection_prompt(self, text: str) -> str:
