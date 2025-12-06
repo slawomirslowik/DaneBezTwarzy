@@ -121,6 +121,64 @@ detector = LLMDetector(
 entities = detector.detect(text)
 ```
 
+## Użycie przez CLI
+
+### Podstawowe komendy CLI z LLM
+
+```bash
+# 1. Anonimizacja pojedynczego pliku z LLM
+dane-bez-twarzy anonymize input.txt -o output.txt \
+  --use-llm \
+  --llm-api-key "c670f40b37e0495c845c63b1e548d95a"
+
+# 2. Z pełnymi parametrami LLM
+dane-bez-twarzy anonymize document.docx -o anonymized.docx \
+  --use-llm \
+  --llm-api-key "c670f40b37e0495c845c63b1e548d95a" \
+  --llm-base-url "https://apim-pllum-tst-pcn.azure-api.net/vllm/v1" \
+  --llm-model "CYFRAGOVPL/pllum-12b-nc-chat-250715"
+
+# 3. Kombinacja NLP + LLM (hybrydowe podejście - zalecane)
+dane-bez-twarzy anonymize input.txt -o output.txt \
+  --use-nlp \
+  --use-llm \
+  --llm-api-key "twoj_klucz"
+
+# 4. Detekcja encji z LLM (bez anonimizacji)
+dane-bez-twarzy detect input.txt \
+  --use-llm \
+  --llm-api-key "twoj_klucz" \
+  --report report.json
+
+# 5. Przetwarzanie katalogu z LLM
+dane-bez-twarzy anonymize-dir ./input_dir -o ./output_dir \
+  --use-llm \
+  --llm-api-key "twoj_klucz" \
+  --recursive
+
+# 6. Verbose mode (szczegółowe logi)
+dane-bez-twarzy anonymize input.txt -o output.txt \
+  --use-llm \
+  --llm-api-key "klucz" \
+  -v
+```
+
+### Porównanie detektorów w CLI
+
+```bash
+# Tylko Regex (najszybsze, podstawowe wzorce)
+dane-bez-twarzy anonymize input.txt -o output.txt
+
+# Regex + NLP spaCy (dobre dla imion/nazwisk)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp
+
+# Regex + LLM (najdokładniejsze, kontekstowe)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-llm --llm-api-key "klucz"
+
+# Wszystkie (maksymalna dokładność)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp --use-llm --llm-api-key "klucz"
+```
+
 ### Zmienne środowiskowe
 
 Możesz również ustawić klucz API jako zmienną środowiskową:

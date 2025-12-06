@@ -178,6 +178,22 @@ dane-bez-twarzy anonymize input.xlsx -c config.json --no-nlp
 # Analiza bez anonimizacji (raport z wykrytych danych)
 dane-bez-twarzy detect input.txt --report report.json
 
+# Użycie detektora LLM (PLLUM)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-llm --llm-api-key "twoj_klucz"
+
+# LLM z pełnymi parametrami
+dane-bez-twarzy anonymize input.txt -o output.txt \
+  --use-llm \
+  --llm-api-key "c670f40b37e0495c845c63b1e548d95a" \
+  --llm-base-url "https://apim-pllum-tst-pcn.azure-api.net/vllm/v1" \
+  --llm-model "CYFRAGOVPL/pllum-12b-nc-chat-250715"
+
+# Kombinacja NLP + LLM (maksymalna dokładność)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp --use-llm --llm-api-key "klucz"
+
+# Detekcja z LLM
+dane-bez-twarzy detect input.txt --use-llm --llm-api-key "klucz" --report report.json
+
 # Tryb szczegółowy (verbose)
 dane-bez-twarzy anonymize input.txt -o output.txt -v
 ```
