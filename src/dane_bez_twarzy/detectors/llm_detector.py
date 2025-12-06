@@ -49,7 +49,7 @@ class LLMDetector:
                 openai_api_key="EMPTY",
                 openai_api_base=self.base_url,
                 temperature=0.1,  # Niska temperatura dla deterministycznych wyników
-                max_tokens=2000,
+                max_tokens=1000,  # Zmniejszone aby uniknąć przekroczenia limitu kontekstu (4096 tokenów total)
                 default_headers={
                     'Ocp-Apim-Subscription-Key': self.api_key
                 }
@@ -68,7 +68,7 @@ class LLMDetector:
     
     def detect(self, text: str) -> List[Entity]:
         """
-        Wykrywa encje w tekście używając LLM.
+        Wykrywa encje w tekście używając LLM z automatycznym chunking.
         
         Args:
             text: Tekst do analizy.
@@ -80,6 +80,33 @@ class LLMDetector:
             return []
         
         try:
+            # Sprawdź czy tekst wymaga podziału na fragmenty
+            chunk_size = getattr(self.config, 'llm_chunk_size', 5000)
+            
+            if len(text) <= chunk_size:
+                # Tekst jest wystarczająco mały - przetwórz w całości
+                return self._detect_chunk(text, 0)
+            else:
+                # Tekst za duży - podziel na fragmenty
+                self.logger.info(f"Tekst ({len(text)} znaków) przekracza limit {chunk_size}. Dzielę na fragmenty...")
+                return self._detect_with_chunking(text)
+            
+        except Exception as e:
+            self.logger.error(f"Błąd podczas wykrywania encji przez LLM: {e}")
+            return []
+    
+    def _detect_chunk(self, text: str, offset: int) -> List[Entity]:
+        """
+        Wykrywa encje w pojedynczym fragmencie tekstu.
+        
+        Args:
+            text: Fragment tekstu do analizy.
+            offset: Przesunięcie początku fragmentu względem oryginalnego tekstu.
+            
+        Returns:
+            Lista wykrytych encji z poprawionymi pozycjami.
+        """
+        try:
             # Przygotuj prompt dla modelu
             prompt = self._create_detection_prompt(text)
             
@@ -89,12 +116,59 @@ class LLMDetector:
             # Parsuj odpowiedź
             entities = self._parse_llm_response(response, text)
             
-            self.logger.info(f"LLM wykrył {len(entities)} encji")
+            # Skoryguj pozycje encji o offset
+            for entity in entities:
+                entity.start += offset
+                entity.end += offset
+            
             return entities
             
         except Exception as e:
-            self.logger.error(f"Błąd podczas wykrywania encji przez LLM: {e}")
+            self.logger.error(f"Błąd podczas przetwarzania fragmentu tekstu: {e}")
             return []
+    
+    def _detect_with_chunking(self, text: str) -> List[Entity]:
+        """
+        Dzieli duży tekst na fragmenty i wykrywa encje w każdym z nich.
+        
+        Args:
+            text: Pełny tekst do analizy.
+            
+        Returns:
+            Lista wszystkich wykrytych encji.
+        """
+        chunk_size = getattr(self.config, 'llm_chunk_size', 5000)
+        overlap = getattr(self.config, 'llm_chunk_overlap', 200)
+        
+        all_entities = []
+        seen_entities = set()  # Śledzenie duplikatów z overlappingu
+        
+        # Podziel tekst na fragmenty
+        start = 0
+        chunk_num = 0
+        
+        while start < len(text):
+            end = min(start + chunk_size, len(text))
+            chunk = text[start:end]
+            
+            chunk_num += 1
+            self.logger.info(f"Przetwarzanie fragmentu {chunk_num}: znaki {start}-{end}")
+            
+            # Wykryj encje w fragmencie
+            chunk_entities = self._detect_chunk(chunk, start)
+            
+            # Dodaj encje, unikając duplikatów z overlappingu
+            for entity in chunk_entities:
+                entity_key = (entity.type, entity.start, entity.end, entity.text)
+                if entity_key not in seen_entities:
+                    all_entities.append(entity)
+                    seen_entities.add(entity_key)
+            
+            # Przesuń start z uwzględnieniem overlappingu
+            start = end - overlap if end < len(text) else end
+        
+        self.logger.info(f"LLM wykrył {len(all_entities)} encji w {chunk_num} fragmentach")
+        return all_entities
     
     def _create_detection_prompt(self, text: str) -> str:
         """
@@ -222,7 +296,11 @@ ODPOWIEDŹ (tylko JSON, bez dodatkowych komentarzy):"""
                         start=start,
                         end=end,
                         confidence=float(entity_data.get('confidence', 0.8)),
-                        metadata={'source': 'llm', 'model': self.model_name}
+                        metadata={
+                            'detector': 'llm',
+                            'source': 'llm', 
+                            'model': self.model_name
+                        }
                     )
                     
                     entities.append(entity)

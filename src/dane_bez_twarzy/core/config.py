@@ -93,6 +93,10 @@ class AnonymizationConfig:
     use_nlp: bool = False  # Domyślnie wyłączone (szybsze, bez limitu rozmiaru)
     nlp_model: str = "pl_core_news_lg"
     
+    # Opcje dla LLM
+    llm_chunk_size: int = 3000  # Maksymalny rozmiar fragmentu tekstu dla LLM (w znakach) - ~750 tokenów
+    llm_chunk_overlap: int = 200  # Nakładanie się fragmentów (w znakach)
+    
     # Raportowanie
     generate_report: bool = True
     report_format: str = "json"  # json, html, txt

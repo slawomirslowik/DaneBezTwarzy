@@ -36,6 +36,8 @@ def main() -> None:
     anonymize_parser.add_argument('--llm-base-url', type=str, help='URL bazowy API LLM')
     anonymize_parser.add_argument('--llm-model', type=str, help='Nazwa modelu LLM')
     anonymize_parser.add_argument('--add-report', type=str, metavar='FILE', help='Ścieżka do zapisu raportu z wykrytymi encjami')
+    anonymize_parser.add_argument('--report-format', type=str, choices=['json', 'html', 'pdf', 'all'], default='json',
+                                   help='Format raportu: json, html, pdf lub all (domyślnie: json)')
     anonymize_parser.add_argument('-v', '--verbose', action='store_true', help='Tryb szczegółowy')
     
     # Komenda: anonymize-dir
@@ -153,18 +155,50 @@ def anonymize_file(args) -> None:
             text = f.read()
         
         report_path = Path(args.add_report)
-        report = anonymizer.generate_report(
-            text, 
-            report_path, 
-            execution_time=execution_time,
-            input_filename=str(input_path.name)
-        )
+        report_format = getattr(args, 'report_format', 'json')
         
-        print(f"\n✓ Raport wygenerowany: {report_path}")
+        # Generuj raport JSON
+        if report_format in ['json', 'all']:
+            json_path = report_path if report_format == 'json' else report_path.with_suffix('.json')
+            report = anonymizer.generate_report(
+                text, 
+                json_path, 
+                execution_time=execution_time,
+                input_filename=str(input_path.name)
+            )
+            print(f"\n✓ Raport JSON: {json_path}")
+        else:
+            # Generuj raport bez zapisu (potrzebny do HTML/PDF)
+            report = anonymizer.generate_report(
+                text, 
+                None, 
+                execution_time=execution_time,
+                input_filename=str(input_path.name)
+            )
+        
+        # Generuj raport HTML
+        if report_format in ['html', 'all']:
+            from dane_bez_twarzy.reporting import generate_html_report
+            html_path = report_path.with_suffix('.html')
+            generate_html_report(report, html_path)
+            print(f"✓ Raport HTML: {html_path}")
+        
+        # Generuj raport PDF
+        if report_format in ['pdf', 'all']:
+            try:
+                from dane_bez_twarzy.reporting import generate_pdf_report
+                pdf_path = report_path.with_suffix('.pdf')
+                generate_pdf_report(report, pdf_path)
+                print(f"✓ Raport PDF: {pdf_path}")
+            except ImportError:
+                print(f"⚠️  Raport PDF wymaga matplotlib. Zainstaluj: pip install matplotlib")
+        
+        # Pokaż statystyki
+        print(f"\n📊 Statystyki:")
         print(f"  - Plik wejściowy: {report['file_stats']['filename']}")
-        print(f"  - Znaków w pliku: {report['file_stats']['character_count']}")
-        print(f"  - Linii w pliku: {report['file_stats']['line_count']}")
-        print(f"  - Wykrytych encji: {report['total_entities']}")
+        print(f"  - Znaków w pliku: {report['file_stats']['character_count']:,}")
+        print(f"  - Linii w pliku: {report['file_stats']['line_count']:,}")
+        print(f"  - Wykrytych encji: {report['total_entities']:,}")
         for entity_type, count in report['entities_by_type'].items():
             print(f"    • {entity_type}: {count}")
 

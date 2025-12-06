@@ -27,12 +27,12 @@ class PolishDetector:
         
         # Słowa kluczowe sugerujące dane osobowe
         self.context_keywords = {
-            EntityType.PERSON: ["pan", "pani", "dr", "prof", "mgr", "inż"],
+            EntityType.PERSON: ["pan", "pani", "dr", "prof", "mgr", "inż", "doc", "ksiądz", "osoba", "ono"],
             EntityType.PESEL: ["pesel", "nr pesel", "numer pesel"],
             EntityType.NIP: ["nip", "nr nip", "numer nip"],
             EntityType.PHONE: ["tel", "telefon", "tel.", "kom", "komórka"],
             EntityType.EMAIL: ["email", "e-mail", "mail", "adres email"],
-            EntityType.ADDRESS: ["ul.", "ulica", "os.", "osiedle", "al.", "aleja"],
+            EntityType.ADDRESS: ["ul.", "ulica", "os.", "osiedle", "al.", "aleja", "pla("],
         }
     
     def detect(self, text: str) -> List[Entity]:

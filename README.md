@@ -198,8 +198,8 @@ dane-bez-twarzy detect input.txt --use-llm --llm-api-key "klucz" --report report
 dane-bez-twarzy anonymize input.txt -o output.txt -v
 
 
-# full opcja: 
-dane-bez-twarzy anonymize text1.txt -o text1-outputx.txt --method entity --use-nlp --use-llm --llm-api-key "c670f40b37e0495c845c63b1e548d95a" --add-report wynikixxx.json
+# Full opcja (anominizacja przy użyciu wszystkich mwetod/modeli w trybie verbose oraz wygenerowanie pełnego raportu"):
+dane-bez-twarzy anonymize text1.txt -o text1-outputxxx.txt --method entity --use-nlp --use-llm --llm-api-key "c670f40b37e0495c845c63b1e548d95a" --add-report wynikixxx --report-format all -v
 ```
 
 ### Użycie z detektorem LLM (PLLUM):
@@ -319,7 +319,7 @@ Biblioteka rozpoznaje m.in.:
 
 ## 🤝 Wkład
 
-Zapraszamy do współpracy! Zobacz [CONTRIBUTING.md](CONTRIBUTING.md)
+Zapraszamy do współpracy! Zobacz [CONTRIBUTING.md](CONTRIBUTING.md) #TODO
 
 ## 📄 Licencja
 
@@ -335,4 +335,4 @@ Ta biblioteka jest narzędziem pomocniczym. Użytkownik jest odpowiedzialny za:
 ## 📞 Kontakt
 
 - Issues: https://github.com/yourusername/dane-bez-twarzy/issues
-- Email: your.email@example.com
+- Email: semantis@int.pl
