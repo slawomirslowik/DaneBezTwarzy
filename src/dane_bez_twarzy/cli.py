@@ -136,8 +136,15 @@ def anonymize_file(args) -> None:
     input_path = Path(args.input)
     output_path = Path(args.output) if args.output else None
     
+    import time
+    
+    # Zmierz czas wykonania
+    start_time = time.time()
     result_path = anonymizer.anonymize_file(input_path, output_path)
+    execution_time = time.time() - start_time
+    
     print(f"✓ Plik zanonimizowany: {result_path}")
+    print(f"  Czas wykonania: {execution_time:.3f} sekund")
     
     # Wygeneruj raport jeśli flaga --add-report została użyta
     if hasattr(args, 'add_report') and args.add_report:
@@ -146,9 +153,17 @@ def anonymize_file(args) -> None:
             text = f.read()
         
         report_path = Path(args.add_report)
-        report = anonymizer.generate_report(text, report_path)
+        report = anonymizer.generate_report(
+            text, 
+            report_path, 
+            execution_time=execution_time,
+            input_filename=str(input_path.name)
+        )
         
         print(f"\n✓ Raport wygenerowany: {report_path}")
+        print(f"  - Plik wejściowy: {report['file_stats']['filename']}")
+        print(f"  - Znaków w pliku: {report['file_stats']['character_count']}")
+        print(f"  - Linii w pliku: {report['file_stats']['line_count']}")
         print(f"  - Wykrytych encji: {report['total_entities']}")
         for entity_type, count in report['entities_by_type'].items():
             print(f"    • {entity_type}: {count}")

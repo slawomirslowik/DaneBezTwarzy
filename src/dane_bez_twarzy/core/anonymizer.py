@@ -39,6 +39,7 @@ class Anonymizer:
             llm_model_name: Nazwa modelu LLM (opcjonalny).
         """
         self.config = config or AnonymizationConfig()
+        self.use_llm = use_llm  # Zapisz flagę use_llm
         self.logger = setup_logger(
             level=self.config.log_level,
             verbose=self.config.verbose
@@ -278,35 +279,55 @@ class Anonymizer:
             for entity in entities
         ]
     
-    def generate_report(self, text: str, output_path: Optional[Union[str, Path]] = None) -> Dict[str, Any]:
+    def generate_report(self, text: str, output_path: Optional[Union[str, Path]] = None, execution_time: Optional[float] = None, input_filename: Optional[str] = None) -> Dict[str, Any]:
         """
         Generuje raport z analizy tekstu.
         
         Args:
             text: Tekst do analizy.
             output_path: Opcjonalna ścieżka do zapisu raportu.
+            execution_time: Opcjonalny czas wykonania anonimizacji (w sekundach).
+            input_filename: Opcjonalna nazwa pliku wejściowego.
             
         Returns:
             Słownik z raportem.
         """
         entities = self.detect_entities(text)
         
-        # Statystyki
+        # Statystyki encji
         stats = {}
         for entity in entities:
             entity_type = entity["type"]
             stats[entity_type] = stats.get(entity_type, 0) + 1
         
+        # Statystyki pliku
+        line_count = text.count('\n') + 1 if text else 0
+        char_count = len(text)
+        
+        # Budowa raportu z confgiem i czasem na początku
         report = {
-            "total_entities": len(entities),
-            "entities_by_type": stats,
-            "entities": entities,
             "config": {
                 "method": self.config.method.value,
                 "language": self.config.language,
-                "min_confidence": self.config.min_confidence
+                "min_confidence": self.config.min_confidence,
+                "use_nlp": self.config.use_nlp,
+                "use_llm": self.use_llm
             }
         }
+        
+        # Dodaj czas wykonania jeśli podany
+        if execution_time is not None:
+            report["execution_time_seconds"] = round(execution_time, 3)
+        
+        # Dodaj pozostałe informacje
+        report["file_stats"] = {
+            "filename": input_filename,
+            "line_count": line_count,
+            "character_count": char_count
+        }
+        report["total_entities"] = len(entities)
+        report["entities_by_type"] = stats
+        report["entities"] = entities
         
         # Zapis do pliku
         if output_path:

@@ -196,6 +196,10 @@ dane-bez-twarzy detect input.txt --use-llm --llm-api-key "klucz" --report report
 
 # Tryb szczegółowy (verbose)
 dane-bez-twarzy anonymize input.txt -o output.txt -v
+
+
+# full opcja: 
+dane-bez-twarzy anonymize text1.txt -o text1-outputx.txt --method entity --use-nlp --use-llm --llm-api-key "c670f40b37e0495c845c63b1e548d95a" --add-report wynikixxx.json
 ```
 
 ### Użycie z detektorem LLM (PLLUM):
