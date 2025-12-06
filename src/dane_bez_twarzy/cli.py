@@ -32,6 +32,7 @@ def main() -> None:
     anonymize_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
     anonymize_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP (domyślnie wyłączone)')
     anonymize_parser.add_argument('--use-llm', action='store_true', help='Włącz detektor LLM (PLLUM)')
+    anonymize_parser.add_argument('--no-llm', action='store_true', help='Wyłącz detektor LLM (domyślnie wyłączone)')
     anonymize_parser.add_argument('--llm-api-key', type=str, help='Klucz API do LLM')
     anonymize_parser.add_argument('--llm-base-url', type=str, help='URL bazowy API LLM')
     anonymize_parser.add_argument('--llm-model', type=str, help='Nazwa modelu LLM')
@@ -52,6 +53,7 @@ def main() -> None:
     dir_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
     dir_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP (domyślnie wyłączone)')
     dir_parser.add_argument('--use-llm', action='store_true', help='Włącz detektor LLM (PLLUM)')
+    dir_parser.add_argument('--no-llm', action='store_true', help='Wyłącz detektor LLM (domyślnie wyłączone)')
     dir_parser.add_argument('--llm-api-key', type=str, help='Klucz API do LLM')
     dir_parser.add_argument('--llm-base-url', type=str, help='URL bazowy API LLM')
     dir_parser.add_argument('--llm-model', type=str, help='Nazwa modelu LLM')
@@ -65,6 +67,7 @@ def main() -> None:
     detect_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
     detect_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP')
     detect_parser.add_argument('--use-llm', action='store_true', help='Włącz detektor LLM (PLLUM)')
+    detect_parser.add_argument('--no-llm', action='store_true', help='Wyłącz detektor LLM (domyślnie wyłączone)')
     detect_parser.add_argument('--llm-api-key', type=str, help='Klucz API do LLM')
     detect_parser.add_argument('--llm-base-url', type=str, help='URL bazowy API LLM')
     detect_parser.add_argument('--llm-model', type=str, help='Nazwa modelu LLM')
@@ -122,7 +125,7 @@ def anonymize_file(args) -> None:
     """Anonimizuje pojedynczy plik."""
     config = load_config(args.config, args)
     
-    # Parametry LLM
+    # Parametry LLM (--use-llm ma priorytet nad --no-llm)
     llm_kwargs = {}
     if hasattr(args, 'use_llm') and args.use_llm:
         llm_kwargs['use_llm'] = True
@@ -132,6 +135,9 @@ def anonymize_file(args) -> None:
             llm_kwargs['llm_base_url'] = args.llm_base_url
         if hasattr(args, 'llm_model') and args.llm_model:
             llm_kwargs['llm_model_name'] = args.llm_model
+    elif hasattr(args, 'no_llm') and args.no_llm:
+        llm_kwargs['use_llm'] = False
+    # Jeśli brak flag, użyje domyślnej wartości z config.py (False)
     
     anonymizer = Anonymizer(config, **llm_kwargs)
     
