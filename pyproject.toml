@@ -27,11 +27,6 @@ classifiers = [
 ]
 
 dependencies = [
-    # Rozpoznawanie tekstu i NER (Named Entity Recognition)
-    "spacy>=3.7.0,<3.8.0",
-    "spacy-legacy>=3.0.11,<3.1.0",
-    "spacy-loggers>=1.0.0,<2.0.0",
-    
     # Wyrażenia regularne dla polskiego języka
     "regex>=2023.12.0",
     
@@ -47,7 +42,7 @@ dependencies = [
     # Wykrywanie języka
     "langdetect>=1.0.9",
     
-    # Walidacja danych - kompatybilna z spaCy
+    # Walidacja danych
     "pydantic>=2.0.0,<3.0.0",
     
     # Narzędzia pomocnicze
@@ -56,6 +51,13 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+nlp = [
+    # NLP (opcjonalne - wymaga kompilatora C++ na Windows)
+    "spacy>=3.7.0,<3.8.0",
+    "spacy-legacy>=3.0.11,<3.1.0",
+    "spacy-loggers>=1.0.0,<2.0.0",
+]
+
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",

@@ -1,7 +1,7 @@
 # Instrukcja instalacji i uruchomienia
 
 ## Wymagania wstępne
-- Python 3.9 lub nowszy
+- Python 3.12 
 - pip
 
 ## Instalacja w trybie deweloperskim
@@ -11,12 +11,12 @@
 cd DaneBezTwarzy
 ```
 
-2. Utwórz środowisko wirtualne:
+2. - Utwórz środowisko wirtualne:
 ```bash
 python -m venv venv
 ```
 
-3. Aktywuj środowisko wirtualne:
+- Aktywuj środowisko wirtualne:
 ```bash
 # Windows
 venv\Scripts\activate
@@ -24,20 +24,56 @@ venv\Scripts\activate
 # Linux/Mac
 source venv/bin/activate
 ```
+Lub użyj narzędzia virtualenvwrapper-win: 
+
+```bash w trybie admina:
+pip install viertualenvwrapper-win
+```
+
+Utwórz nowe środowisko:
+```bash
+mkvirtualenv <nazwa>
+```
+
+I aktywuj:
+
+```bash
+workon <nazwa>
+```
 
 4. Zainstaluj bibliotekę w trybie edytowalnym:
 ```bash
 pip install -e .
 ```
 
-5. Zainstaluj model spaCy dla języka polskiego:
+**Biblioteka zadziała bez spaCy - używając tylko detektorów regex (PESEL, NIP, email, telefon, itp.)**
+
+5. (Opcjonalnie) Zainstaluj spaCy dla zaawansowanego NLP:
+
+**UWAGA:** Na Windows spaCy wymaga Visual C++ Build Tools!
+
+**Metoda A - Precompilowane pakiety (ZALECANE dla Windows):**
 ```bash
+# Zainstaluj spaCy z gotowymi pakietami
+pip install spacy==3.7.2 --only-binary :all:
+
+# Zainstaluj model
+pip install https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.7.0/pl_core_news_lg-3.7.0-py3-none-any.whl
+```
+
+**Metoda B - Kompilacja (wymaga Visual C++ Build Tools):**
+```bash
+# Najpierw zainstaluj Visual C++ Build Tools z:
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+pip install -e ".[nlp]"
 python -m spacy download pl_core_news_lg
 ```
 
-**Uwaga:** Jeśli wystąpi błąd związany z pydantic podczas instalacji modelu spaCy, użyj alternatywnej metody:
-```bash
-pip install https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.7.0/pl_core_news_lg-3.7.0-py3-none-any.whl
+**Metoda C - Użycie bez NLP:**
+W kodzie ustaw `use_nlp=False` - biblioteka będzie działać z detektorami regex:
+```python
+config = AnonymizationConfig(use_nlp=False)
 ```
 
 6. Zainstaluj zależności deweloperskie (opcjonalnie):
@@ -47,12 +83,17 @@ pip install -e ".[dev]"
 
 ## Opcjonalne instalacje
 
+### NLP z spaCy (wykrywanie imion/nazwisk)
+```bash
+pip install -e ".[nlp]"
+```
+
 ### OCR (rozpoznawanie tekstu z obrazów)
 ```bash
 pip install -e ".[ocr]"
 ```
 
-### Zaawansowane NLP
+### Zaawansowane NLP (Transformers)
 ```bash
 pip install -e ".[advanced-nlp]"
 ```

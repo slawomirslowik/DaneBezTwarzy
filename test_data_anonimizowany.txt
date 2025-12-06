@@ -1,0 +1,10 @@
+
+        ****** DANE
+        
+        Pracownik: Jan Kowalski
+        PESEL: *********45
+        Email: ***.********@*****.**
+        Telefon: ***-***-***
+        
+        Adres: **. ******* *, 00-001 Warszawa
+        
