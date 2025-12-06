@@ -115,12 +115,40 @@ pytest --cov=dane_bez_twarzy --cov-report=html
 ## Użycie CLI
 
 ```bash
-# Anonimizacja pojedynczego pliku
+# Anonimizacja pojedynczego pliku (domyślnie BEZ NLP)
 dane-bez-twarzy anonymize input.txt -o output.txt --method mask
 
-# Anonimizacja katalogu
+# Anonimizacja Z NLP (wykrywanie imion/nazwisk przez spaCy)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp
+
+# Anonimizacja katalogu (rekurencyjnie)
 dane-bez-twarzy anonymize-dir ./input_dir -o ./output_dir --recursive
 
-# Wykrywanie encji
+# Anonimizacja katalogu Z NLP
+dane-bez-twarzy anonymize-dir ./input_dir -o ./output_dir --use-nlp --recursive
+
+# Wykrywanie encji (raport bez anonimizacji)
 dane-bez-twarzy detect input.txt --report report.json
+
+# Wykrywanie Z NLP
+dane-bez-twarzy detect input.txt --report report.json --use-nlp
+
+# Tryb szczegółowy (verbose - pokazuje debug)
+dane-bez-twarzy anonymize input.txt -o output.txt -v
+```
+
+## Detektory
+
+Biblioteka używa **4 detektorów** (3 zawsze aktywne + 1 opcjonalny):
+
+### Zawsze aktywne (szybkie, bez dodatkowej instalacji):
+1. **PlaceholderDetector** - wykrywa `[name]`, `[email]`, `[phone]`, `[address]` itp.
+2. **RegexDetector** - wykrywa PESEL, NIP, REGON, email, telefon, konto bankowe
+3. **PolishDetector** - wykrywa polskie wzorce (kody pocztowe, adresy, numery dokumentów)
+
+### Opcjonalny (wymaga spaCy i flagi `--use-nlp`):
+4. **NLPDetector** - wykrywa imiona, nazwiska, organizacje przez Named Entity Recognition
+
+**Domyślnie**: Szybkie wykrywanie bez NLP (Placeholdery + Regex + Polskie wzorce)  
+**Z flagą `--use-nlp`**: Wszystkie 4 detektory (wolniejsze, ale dokładniejsze dla imion/nazwisk)
 ```
