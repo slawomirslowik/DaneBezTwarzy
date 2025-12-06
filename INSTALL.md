@@ -26,8 +26,9 @@ source venv/bin/activate
 ```
 Lub użyj narzędzia virtualenvwrapper-win: 
 
-```bash w trybie admina:
-pip install viertualenvwrapper-win
+```bash
+# Windows (w trybie admina)
+pip install virtualenvwrapper-win
 ```
 
 Utwórz nowe środowisko:

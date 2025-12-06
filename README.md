@@ -15,6 +15,33 @@
 - **Dane lokalizacyjne**: adresy, współrzędne GPS
 - **Dane identyfikacyjne**: numery dokumentów, numery rejestracyjne
 - **Daty urodzenia i inne dane wrażliwe**
+- **Placeholdery**: `[name]`, `[email]`, `[phone]`, `[address]` itp.
+
+### Detektory (automatyczne):
+Biblioteka używa **czterech detektorów** działających równolegle:
+
+1. **PlaceholderDetector** ✅ (zawsze aktywny)
+   - Wykrywa placeholdery w notacji `[name]`, `[surname]`, `[email]`, `[phone]`, `[pesel]`, `[city]` itp.
+   - Obsługuje 30+ typów placeholderów używanych w templatech i plikach treningowych
+   - Pewność: 1.0 (najwyższa)
+
+2. **RegexDetector** ✅ (zawsze aktywny)
+   - Wykrywa dane przez wyrażenia regularne: PESEL, NIP, REGON, email, telefon, konto bankowe
+   - Szybki i deterministyczny
+   - Pewność: 0.8-0.95
+
+3. **PolishDetector** ✅ (aktywny gdy `language="pl"`)
+   - Wykrywa polskie wzorce: adresy, kody pocztowe, numery dokumentów
+   - Pewność: 0.7-0.9
+
+4. **NLPDetector** ⚠️ (wymaga `--use-nlp` lub `use_nlp=True`)
+   - Wykrywa imiona/nazwiska/organizacje przez spaCy NER (Named Entity Recognition)
+   - Model: `pl_core_news_lg` dla języka polskiego
+   - Wolniejszy, ale wykrywa kontekstowe dane osobowe
+   - Pewność: 0.6-0.95
+
+**Domyślnie**: Placeholdery + Regex + Polskie wzorce (szybkie, bez NLP)  
+**Z NLP**: Wszystkie 4 detektory (dokładniejsze, wolniejsze)
 
 ### Obsługiwane formaty:
 - 📄 Dokumenty tekstowe (TXT, DOCX, ODT)
@@ -209,6 +236,8 @@ pytest --cov=dane_bez_twarzy --cov-report=html
 ## 📊 Przykładowe wzorce
 
 Biblioteka rozpoznaje m.in.:
+
+### Dane osobowe (Regex):
 - **PESEL**: `90010112345`
 - **NIP**: `123-456-78-90`, `1234567890`
 - **REGON**: `123456789`, `12345678901234`
@@ -216,6 +245,26 @@ Biblioteka rozpoznaje m.in.:
 - **Email**: `jan.kowalski@example.com`
 - **Konto bankowe**: `12 3456 7890 1234 5678 9012 3456`
 - **Dowód osobisty**: `ABC123456`
+
+### Placeholdery (PlaceholderDetector):
+- `[name]`, `[surname]` → `PERSON`
+- `[email]` → `EMAIL`
+- `[phone]` → `PHONE`
+- `[address]` → `ADDRESS`
+- `[city]` → `LOCATION`
+- `[pesel]` → `PESEL`
+- `[nip]` → `NIP`
+- `[company]` → `ORGANIZATION`
+- `[date]`, `[birth-date]` → `DATE`
+- `[age]` → `AGE`
+- `[sex]` → `SEX`
+- `[password]`, `[secret]` → `SECRET`
+- `[username]` → `USERNAME`
+- `[job-title]` → `JOB_TITLE`
+
+### Imiona/nazwiska (NLPDetector - wymaga `--use-nlp`):
+- **Jan Kowalski**, **Anna Nowak**, **Piotr Wiśniewski**
+- Wykrywane kontekstowo przez model spaCy `pl_core_news_lg`
 
 ## 🤝 Wkład
 
