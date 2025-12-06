@@ -81,6 +81,12 @@ advanced-nlp = [
     "torch>=2.1.0",
 ]
 
+llm = [
+    # Opcjonalne: Detektor LLM używający PLLUM
+    "langchain-openai>=0.0.2",
+    "langchain>=0.1.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/yourusername/dane-bez-twarzy"
 Documentation = "https://dane-bez-twarzy.readthedocs.io"

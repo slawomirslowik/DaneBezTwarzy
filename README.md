@@ -73,6 +73,9 @@ pip install dane-bez-twarzy[ocr]
 # Z zaawansowanym NLP
 pip install dane-bez-twarzy[advanced-nlp]
 
+# Z detektorem LLM (PLLUM)
+pip install dane-bez-twarzy[llm]
+
 # Dla deweloperów
 pip install dane-bez-twarzy[dev]
 ```
@@ -179,6 +182,33 @@ dane-bez-twarzy detect input.txt --report report.json
 dane-bez-twarzy anonymize input.txt -o output.txt -v
 ```
 
+### Użycie z detektorem LLM (PLLUM):
+
+```python
+from dane_bez_twarzy import Anonymizer, AnonymizationConfig, EntityType
+
+# Konfiguracja
+config = AnonymizationConfig(
+    entities=[EntityType.PERSON, EntityType.EMAIL, EntityType.ADDRESS],
+    method="mask"
+)
+
+# Użycie detektora LLM dla większej dokładności
+anonymizer = Anonymizer(
+    config,
+    use_llm=True,
+    llm_api_key="twój_klucz_api",
+    llm_base_url="https://apim-pllum-tst-pcn.azure-api.net/vllm/v1",
+    llm_model_name="CYFRAGOVPL/pllum-12b-nc-chat-250715"
+)
+
+text = "Jan Kowalski mieszka przy ul. Kwiatowej 15 w Warszawie"
+result = anonymizer.anonymize_text(text)
+print(result.anonymized_text)
+```
+
+📚 **Więcej informacji o LLM**: Zobacz [LLM_USAGE.md](LLM_USAGE.md)
+
 ## ⚙️ Konfiguracja
 
 ### Plik konfiguracyjny (JSON):
@@ -212,7 +242,8 @@ dane_bez_twarzy/
 │   └── generalize.py        # Generalizacja
 ├── detectors/
 │   ├── regex_detector.py    # Detekcja regex
-│   ├── nlp_detector.py      # NLP/NER
+│   ├── nlp_detector.py      # NLP/NER (spaCy)
+│   ├── llm_detector.py      # LLM (PLLUM) - nowy!
 │   └── polish_detector.py   # Polskie wzorce
 ├── processors/
 │   ├── text_processor.py    # Teksty

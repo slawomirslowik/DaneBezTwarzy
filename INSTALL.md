@@ -99,6 +99,18 @@ pip install -e ".[ocr]"
 pip install -e ".[advanced-nlp]"
 ```
 
+### LLM Detector (PLLUM)
+```bash
+pip install -e ".[llm]"
+```
+
+**Aby użyć detektora LLM, potrzebujesz:**
+1. Klucz API do PLLUM
+2. URL endpoint API
+3. Zainstalowane zależności: `langchain-openai`
+
+Zobacz [LLM_USAGE.md](LLM_USAGE.md) dla szczegółowych instrukcji.
+
 ## Uruchomienie przykładów
 
 ```bash
