@@ -35,6 +35,7 @@ def main() -> None:
     anonymize_parser.add_argument('--llm-api-key', type=str, help='Klucz API do LLM')
     anonymize_parser.add_argument('--llm-base-url', type=str, help='URL bazowy API LLM')
     anonymize_parser.add_argument('--llm-model', type=str, help='Nazwa modelu LLM')
+    anonymize_parser.add_argument('--add-report', type=str, metavar='FILE', help='Ścieżka do zapisu raportu z wykrytymi encjami')
     anonymize_parser.add_argument('-v', '--verbose', action='store_true', help='Tryb szczegółowy')
     
     # Komenda: anonymize-dir
@@ -137,6 +138,20 @@ def anonymize_file(args) -> None:
     
     result_path = anonymizer.anonymize_file(input_path, output_path)
     print(f"✓ Plik zanonimizowany: {result_path}")
+    
+    # Wygeneruj raport jeśli flaga --add-report została użyta
+    if hasattr(args, 'add_report') and args.add_report:
+        # Wczytaj oryginalny tekst do analizy
+        with open(input_path, 'r', encoding='utf-8') as f:
+            text = f.read()
+        
+        report_path = Path(args.add_report)
+        report = anonymizer.generate_report(text, report_path)
+        
+        print(f"\n✓ Raport wygenerowany: {report_path}")
+        print(f"  - Wykrytych encji: {report['total_entities']}")
+        for entity_type, count in report['entities_by_type'].items():
+            print(f"    • {entity_type}: {count}")
 
 
 def anonymize_directory(args) -> None:

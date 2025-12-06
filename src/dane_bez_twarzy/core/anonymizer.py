@@ -44,6 +44,9 @@ class Anonymizer:
             verbose=self.config.verbose
         )
         
+        # Przechowywanie informacji o aktualnie przetwarzanym pliku
+        self._current_file = None
+        
         # Inicjalizacja detektora encji
         self.detector = EntityDetector(
             self.config,
@@ -60,12 +63,13 @@ class Anonymizer:
         if use_llm:
             self.logger.info("Detektor LLM włączony")
     
-    def anonymize_text(self, text: str) -> str:
+    def anonymize_text(self, text: str, log_prefix: str = "") -> str:
         """
         Anonimizuje tekst.
         
         Args:
             text: Tekst do anonimizacji.
+            log_prefix: Prefiks dla logów (np. nazwa pliku).
             
         Returns:
             Zanonimizowany tekst.
@@ -82,10 +86,64 @@ class Anonymizer:
         
         self.logger.info(f"Znaleziono {len(entities)} encji do anonimizacji")
         
+        # Loguj szczegóły każdej zanonimizowanej encji
+        self._log_entity_details(text, entities, log_prefix)
+        
         # Anonimizuj tekst
         anonymized_text = self.strategy.anonymize(text, entities)
         
         return anonymized_text
+    
+    def _log_entity_details(self, text: str, entities: List, log_prefix: str = "") -> None:
+        """
+        Loguje szczegółowe informacje o wykrytych encjach.
+        
+        Args:
+            text: Oryginalny tekst.
+            entities: Lista wykrytych encji.
+            log_prefix: Prefiks dla logów.
+        """
+        if not self.config.verbose:
+            return
+        
+        # Dodaj nazwę pliku do prefiksu jeśli dostępna
+        if self._current_file and not log_prefix:
+            log_prefix = f"[{self._current_file}] "
+        
+        # Oblicz numery linii i kolumn dla każdej encji
+        for entity in entities:
+            line_num, col_num = self._get_position(text, entity.start)
+            
+            detector_info = entity.metadata.get('detector', 'unknown') if entity.metadata else 'unknown'
+            
+            log_msg = (
+                f"{log_prefix}Zanonimizowano: "
+                f"typ={entity.type.value}, "
+                f"tekst='{entity.text}', "
+                f"linia={line_num}, "
+                f"kolumna={col_num}, "
+                f"pozycja={entity.start}-{entity.end}, "
+                f"pewność={entity.confidence:.2f}, "
+                f"detektor={detector_info}"
+            )
+            
+            self.logger.info(log_msg)
+    
+    def _get_position(self, text: str, offset: int) -> tuple:
+        """
+        Oblicza numer linii i kolumny na podstawie offsetu w tekście.
+        
+        Args:
+            text: Tekst źródłowy.
+            offset: Pozycja znaku (offset).
+            
+        Returns:
+            Tuple (numer_linii, numer_kolumny) - numeracja od 1.
+        """
+        lines = text[:offset].split('\n')
+        line_num = len(lines)
+        col_num = len(lines[-1]) + 1 if lines else 1
+        return line_num, col_num
     
     def anonymize_file(
         self,
@@ -120,6 +178,9 @@ class Anonymizer:
         # Pobierz odpowiedni processor
         processor = get_processor(input_path.suffix)
         
+        # Zapisz nazwę pliku dla logowania
+        self._current_file = str(input_path.name)
+        
         # Przetwórz plik
         processor.process(
             input_path=input_path,
@@ -127,6 +188,8 @@ class Anonymizer:
             anonymizer=self,
             **kwargs
         )
+        
+        self._current_file = None
         
         self.logger.info(f"Plik zanonimizowany: {output_path}")
         return output_path
