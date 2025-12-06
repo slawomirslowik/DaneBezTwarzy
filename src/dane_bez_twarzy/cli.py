@@ -29,6 +29,8 @@ def main() -> None:
                                    choices=['mask', 'pseudonymize', 'hash', 'redact', 'generalize', 'encrypt'],
                                    default='mask', help='Metoda anonimizacji')
     anonymize_parser.add_argument('--language', type=str, default='pl', help='Język dokumentu')
+    anonymize_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
+    anonymize_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP (domyślnie wyłączone)')
     anonymize_parser.add_argument('-v', '--verbose', action='store_true', help='Tryb szczegółowy')
     
     # Komenda: anonymize-dir
@@ -40,6 +42,8 @@ def main() -> None:
                            default=['*.txt', '*.docx', '*.xlsx', '*.pdf'],
                            help='Wzorce plików do przetworzenia')
     dir_parser.add_argument('-c', '--config', type=str, help='Ścieżka do pliku konfiguracyjnego JSON')
+    dir_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
+    dir_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP (domyślnie wyłączone)')
     dir_parser.add_argument('-v', '--verbose', action='store_true', help='Tryb szczegółowy')
     
     # Komenda: detect
@@ -47,6 +51,8 @@ def main() -> None:
     detect_parser.add_argument('input', type=str, help='Ścieżka do pliku')
     detect_parser.add_argument('-r', '--report', type=str, help='Ścieżka do zapisu raportu')
     detect_parser.add_argument('-c', '--config', type=str, help='Ścieżka do pliku konfiguracyjnego JSON')
+    detect_parser.add_argument('--use-nlp', action='store_true', help='Włącz NLP (wykrywanie imion/nazwisk)')
+    detect_parser.add_argument('--no-nlp', action='store_true', help='Wyłącz NLP')
     detect_parser.add_argument('-v', '--verbose', action='store_true', help='Tryb szczegółowy')
     
     args = parser.parse_args()
@@ -80,6 +86,14 @@ def load_config(config_path: Optional[str], args) -> AnonymizationConfig:
             config_kwargs['method'] = args.method
         if hasattr(args, 'language'):
             config_kwargs['language'] = args.language
+        
+        # Obsługa flag NLP (--use-nlp ma priorytet nad --no-nlp)
+        if hasattr(args, 'use_nlp') and args.use_nlp:
+            config_kwargs['use_nlp'] = True
+        elif hasattr(args, 'no_nlp') and args.no_nlp:
+            config_kwargs['use_nlp'] = False
+        # Jeśli brak flag, użyje domyślnej wartości z config.py (False)
+        
         if hasattr(args, 'verbose'):
             config_kwargs['verbose'] = args.verbose
             config_kwargs['log_level'] = 'DEBUG' if args.verbose else 'INFO'

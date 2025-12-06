@@ -82,7 +82,7 @@ class AnonymizationConfig:
     min_confidence: float = 0.7  # Minimalna pewność wykrycia (0-1)
     
     # Opcje dla NLP
-    use_nlp: bool = True
+    use_nlp: bool = False  # Domyślnie wyłączone (szybsze, bez limitu rozmiaru)
     nlp_model: str = "pl_core_news_lg"
     
     # Raportowanie

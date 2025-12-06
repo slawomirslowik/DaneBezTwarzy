@@ -120,17 +120,36 @@ anonymizer.anonymize_directory(
 ### CLI (Command Line Interface):
 
 ```bash
-# Pojedynczy plik
+# Pojedynczy plik (domyślnie bez NLP - szybkie, tylko regex)
 dane-bez-twarzy anonymize input.docx -o output.docx --method mask
 
-# Katalog
+# Włącz NLP (wykrywanie imion/nazwisk przez spaCy)
+dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp
+
+# Jawnie wyłącz NLP (przydatne gdy w config.json jest use_nlp=true)
+dane-bez-twarzy anonymize input.txt -o output.txt --no-nlp
+
+# Z różnymi metodami
+dane-bez-twarzy anonymize input.txt -o output.txt --method pseudonymize
+dane-bez-twarzy anonymize input.txt -o output.txt --method generalize
+
+# Katalog (rekurencyjnie)
 dane-bez-twarzy anonymize-dir ./input_dir -o ./output_dir --recursive
 
-# Z konfiguracją
+# Katalog z NLP
+dane-bez-twarzy anonymize-dir ./input_dir -o ./output_dir --use-nlp --recursive
+
+# Z plikiem konfiguracyjnym
 dane-bez-twarzy anonymize input.xlsx -c config.json
 
-# Analiza bez anonimizacji
+# Z plikiem konfiguracyjnym + nadpisanie ustawienia NLP
+dane-bez-twarzy anonymize input.xlsx -c config.json --no-nlp
+
+# Analiza bez anonimizacji (raport z wykrytych danych)
 dane-bez-twarzy detect input.txt --report report.json
+
+# Tryb szczegółowy (verbose)
+dane-bez-twarzy anonymize input.txt -o output.txt -v
 ```
 
 ## ⚙️ Konfiguracja

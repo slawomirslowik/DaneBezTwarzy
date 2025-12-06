@@ -1,0 +1,851 @@
+{
+  "total_entities": 119,
+  "entities_by_type": {
+    "PHONE": 2,
+    "LICENSE_PLATE": 84,
+    "PASSPORT": 1,
+    "NIP": 1,
+    "ADDRESS": 30,
+    "DATE_OF_BIRTH": 1
+  },
+  "entities": [
+    {
+      "text": "06 225 1635",
+      "type": "PHONE",
+      "start": 1597,
+      "end": 1608,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 1682,
+      "end": 1689,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZIELONKA",
+      "type": "LICENSE_PLATE",
+      "start": 1690,
+      "end": 1698,
+      "confidence": 1.0
+    },
+    {
+      "text": "GN 7635",
+      "type": "LICENSE_PLATE",
+      "start": 2222,
+      "end": 2229,
+      "confidence": 1.0
+    },
+    {
+      "text": "GK 7625",
+      "type": "LICENSE_PLATE",
+      "start": 2452,
+      "end": 2459,
+      "confidence": 1.0
+    },
+    {
+      "text": "PCV DN110",
+      "type": "LICENSE_PLATE",
+      "start": 2730,
+      "end": 2739,
+      "confidence": 1.0
+    },
+    {
+      "text": "PE DN80",
+      "type": "LICENSE_PLATE",
+      "start": 2775,
+      "end": 2782,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZADANIA",
+      "type": "LICENSE_PLATE",
+      "start": 3095,
+      "end": 3102,
+      "confidence": 1.0
+    },
+    {
+      "text": "OBSZARU",
+      "type": "LICENSE_PLATE",
+      "start": 3115,
+      "end": 3122,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 3144,
+      "end": 3151,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZIELONKA",
+      "type": "LICENSE_PLATE",
+      "start": 3152,
+      "end": 3160,
+      "confidence": 1.0
+    },
+    {
+      "text": "OKOLICE",
+      "type": "LICENSE_PLATE",
+      "start": 3161,
+      "end": 3168,
+      "confidence": 1.0
+    },
+    {
+      "text": "KONTRAKT",
+      "type": "LICENSE_PLATE",
+      "start": 3169,
+      "end": 3177,
+      "confidence": 1.0
+    },
+    {
+      "text": "RYSUNKU",
+      "type": "LICENSE_PLATE",
+      "start": 3322,
+      "end": 3329,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZADANIA",
+      "type": "LICENSE_PLATE",
+      "start": 3912,
+      "end": 3919,
+      "confidence": 1.0
+    },
+    {
+      "text": "OBSZARU",
+      "type": "LICENSE_PLATE",
+      "start": 3932,
+      "end": 3939,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 3961,
+      "end": 3968,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZIELONKA",
+      "type": "LICENSE_PLATE",
+      "start": 3969,
+      "end": 3977,
+      "confidence": 1.0
+    },
+    {
+      "text": "OKOLICE",
+      "type": "LICENSE_PLATE",
+      "start": 3978,
+      "end": 3985,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZADANIA",
+      "type": "LICENSE_PLATE",
+      "start": 4580,
+      "end": 4587,
+      "confidence": 1.0
+    },
+    {
+      "text": "OBSZARU",
+      "type": "LICENSE_PLATE",
+      "start": 4600,
+      "end": 4607,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 4629,
+      "end": 4636,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZIELONKA",
+      "type": "LICENSE_PLATE",
+      "start": 4637,
+      "end": 4645,
+      "confidence": 1.0
+    },
+    {
+      "text": "OKOLICE",
+      "type": "LICENSE_PLATE",
+      "start": 4646,
+      "end": 4653,
+      "confidence": 1.0
+    },
+    {
+      "text": "KONTRAKT",
+      "type": "LICENSE_PLATE",
+      "start": 4654,
+      "end": 4662,
+      "confidence": 1.0
+    },
+    {
+      "text": "RYSUNKU",
+      "type": "LICENSE_PLATE",
+      "start": 4871,
+      "end": 4878,
+      "confidence": 1.0
+    },
+    {
+      "text": "OBSZARU",
+      "type": "LICENSE_PLATE",
+      "start": 5482,
+      "end": 5489,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 5511,
+      "end": 5518,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZIELONKA",
+      "type": "LICENSE_PLATE",
+      "start": 5519,
+      "end": 5527,
+      "confidence": 1.0
+    },
+    {
+      "text": "OKOLICE",
+      "type": "LICENSE_PLATE",
+      "start": 5528,
+      "end": 5535,
+      "confidence": 1.0
+    },
+    {
+      "text": "PROFIL",
+      "type": "LICENSE_PLATE",
+      "start": 5560,
+      "end": 5566,
+      "confidence": 1.0
+    },
+    {
+      "text": "PODPIS",
+      "type": "LICENSE_PLATE",
+      "start": 5708,
+      "end": 5714,
+      "confidence": 1.0
+    },
+    {
+      "text": "IS 1549103",
+      "type": "PASSPORT",
+      "start": 5804,
+      "end": 5814,
+      "confidence": 1.0
+    },
+    {
+      "text": "PODPIS",
+      "type": "LICENSE_PLATE",
+      "start": 5854,
+      "end": 5860,
+      "confidence": 1.0
+    },
+    {
+      "text": "MAPAIS",
+      "type": "LICENSE_PLATE",
+      "start": 6384,
+      "end": 6390,
+      "confidence": 1.0
+    },
+    {
+      "text": "PODPIS",
+      "type": "LICENSE_PLATE",
+      "start": 6425,
+      "end": 6431,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZELKIE",
+      "type": "LICENSE_PLATE",
+      "start": 7687,
+      "end": 7695,
+      "confidence": 1.0
+    },
+    {
+      "text": "USTAWY",
+      "type": "LICENSE_PLATE",
+      "start": 7715,
+      "end": 7721,
+      "confidence": 1.0
+    },
+    {
+      "text": "PRAWIE",
+      "type": "LICENSE_PLATE",
+      "start": 7724,
+      "end": 7730,
+      "confidence": 1.0
+    },
+    {
+      "text": "EN 1990",
+      "type": "LICENSE_PLATE",
+      "start": 8520,
+      "end": 8527,
+      "confidence": 1.0
+    },
+    {
+      "text": "STAROSTA",
+      "type": "LICENSE_PLATE",
+      "start": 10197,
+      "end": 10205,
+      "confidence": 1.0
+    },
+    {
+      "text": "79 100 77 71",
+      "type": "PHONE",
+      "start": 10344,
+      "end": 10356,
+      "confidence": 1.0
+    },
+    {
+      "text": "061 852 22 22",
+      "type": "NIP",
+      "start": 10365,
+      "end": 10378,
+      "confidence": 1.0
+    },
+    {
+      "text": "GEODETA",
+      "type": "LICENSE_PLATE",
+      "start": 10456,
+      "end": 10463,
+      "confidence": 1.0
+    },
+    {
+      "text": "NR EWID",
+      "type": "LICENSE_PLATE",
+      "start": 10818,
+      "end": 10825,
+      "confidence": 1.0
+    },
+    {
+      "text": "MINISTRA",
+      "type": "LICENSE_PLATE",
+      "start": 10926,
+      "end": 10934,
+      "confidence": 1.0
+    },
+    {
+      "text": "ROZWOJU",
+      "type": "LICENSE_PLATE",
+      "start": 10952,
+      "end": 10959,
+      "confidence": 1.0
+    },
+    {
+      "text": "JD 7331",
+      "type": "LICENSE_PLATE",
+      "start": 11950,
+      "end": 11957,
+      "confidence": 1.0
+    },
+    {
+      "text": "GK 7625",
+      "type": "LICENSE_PLATE",
+      "start": 12113,
+      "end": 12120,
+      "confidence": 1.0
+    },
+    {
+      "text": "GK 5548",
+      "type": "LICENSE_PLATE",
+      "start": 12332,
+      "end": 12339,
+      "confidence": 1.0
+    },
+    {
+      "text": "GK 5548",
+      "type": "LICENSE_PLATE",
+      "start": 12348,
+      "end": 12355,
+      "confidence": 1.0
+    },
+    {
+      "text": "OBSZARU",
+      "type": "LICENSE_PLATE",
+      "start": 14452,
+      "end": 14459,
+      "confidence": 1.0
+    },
+    {
+      "text": "PUSZCZA",
+      "type": "LICENSE_PLATE",
+      "start": 14481,
+      "end": 14488,
+      "confidence": 1.0
+    },
+    {
+      "text": "RYSUNKU",
+      "type": "LICENSE_PLATE",
+      "start": 14880,
+      "end": 14887,
+      "confidence": 1.0
+    },
+    {
+      "text": "NORMALNY",
+      "type": "LICENSE_PLATE",
+      "start": 14928,
+      "end": 14936,
+      "confidence": 1.0
+    },
+    {
+      "text": "DROGOWA",
+      "type": "LICENSE_PLATE",
+      "start": 14948,
+      "end": 14955,
+      "confidence": 1.0
+    },
+    {
+      "text": "PODPIS",
+      "type": "LICENSE_PLATE",
+      "start": 14981,
+      "end": 14987,
+      "confidence": 1.0
+    },
+    {
+      "text": "PRZELEWU",
+      "type": "LICENSE_PLATE",
+      "start": 24492,
+      "end": 24500,
+      "confidence": 1.0
+    },
+    {
+      "text": "OKAZUJE",
+      "type": "LICENSE_PLATE",
+      "start": 24757,
+      "end": 24764,
+      "confidence": 1.0
+    },
+    {
+      "text": "OS. Piszę",
+      "type": "ADDRESS",
+      "start": 26845,
+      "end": 26854,
+      "confidence": 0.8
+    },
+    {
+      "text": "SAM NUMER",
+      "type": "LICENSE_PLATE",
+      "start": 62659,
+      "end": 62668,
+      "confidence": 1.0
+    },
+    {
+      "text": "TELEFONU",
+      "type": "LICENSE_PLATE",
+      "start": 113006,
+      "end": 113014,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 126167,
+      "end": 126175,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 186907,
+      "end": 186915,
+      "confidence": 1.0
+    },
+    {
+      "text": "PESELU",
+      "type": "LICENSE_PLATE",
+      "start": 201922,
+      "end": 201928,
+      "confidence": 1.0
+    },
+    {
+      "text": "PESELU",
+      "type": "LICENSE_PLATE",
+      "start": 202553,
+      "end": 202559,
+      "confidence": 1.0
+    },
+    {
+      "text": "os. Najgorsze",
+      "type": "ADDRESS",
+      "start": 234920,
+      "end": 234933,
+      "confidence": 0.8
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 243949,
+      "end": 243957,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 247748,
+      "end": 247756,
+      "confidence": 1.0
+    },
+    {
+      "text": "ul. Dębowej",
+      "type": "ADDRESS",
+      "start": 252436,
+      "end": 252447,
+      "confidence": 0.8
+    },
+    {
+      "text": "osiedle zna",
+      "type": "ADDRESS",
+      "start": 258089,
+      "end": 258100,
+      "confidence": 0.8
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 267436,
+      "end": 267444,
+      "confidence": 1.0
+    },
+    {
+      "text": "osiedle ma",
+      "type": "ADDRESS",
+      "start": 270990,
+      "end": 271000,
+      "confidence": 0.8
+    },
+    {
+      "text": "NIE MOJE",
+      "type": "LICENSE_PLATE",
+      "start": 345135,
+      "end": 345143,
+      "confidence": 1.0
+    },
+    {
+      "text": "ZEROWY",
+      "type": "LICENSE_PLATE",
+      "start": 358836,
+      "end": 358842,
+      "confidence": 1.0
+    },
+    {
+      "text": "MECHANIK",
+      "type": "LICENSE_PLATE",
+      "start": 359115,
+      "end": 359123,
+      "confidence": 1.0
+    },
+    {
+      "text": "PILNIE",
+      "type": "LICENSE_PLATE",
+      "start": 359124,
+      "end": 359130,
+      "confidence": 1.0
+    },
+    {
+      "text": "TOTALNA",
+      "type": "LICENSE_PLATE",
+      "start": 363893,
+      "end": 363900,
+      "confidence": 1.0
+    },
+    {
+      "text": "BZDURA",
+      "type": "LICENSE_PLATE",
+      "start": 363901,
+      "end": 363907,
+      "confidence": 1.0
+    },
+    {
+      "text": "PESELI",
+      "type": "LICENSE_PLATE",
+      "start": 371510,
+      "end": 371516,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 376546,
+      "end": 376554,
+      "confidence": 1.0
+    },
+    {
+      "text": "PLUSKWY",
+      "type": "LICENSE_PLATE",
+      "start": 378129,
+      "end": 378136,
+      "confidence": 1.0
+    },
+    {
+      "text": "PESELU",
+      "type": "LICENSE_PLATE",
+      "start": 380605,
+      "end": 380611,
+      "confidence": 1.0
+    },
+    {
+      "text": "os. Jego",
+      "type": "ADDRESS",
+      "start": 430206,
+      "end": 430214,
+      "confidence": 0.8
+    },
+    {
+      "text": "os.   Na",
+      "type": "ADDRESS",
+      "start": 453131,
+      "end": 453139,
+      "confidence": 0.8
+    },
+    {
+      "text": "al. Nie",
+      "type": "ADDRESS",
+      "start": 534789,
+      "end": 534796,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Najpierw",
+      "type": "ADDRESS",
+      "start": 559936,
+      "end": 559948,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Na",
+      "type": "ADDRESS",
+      "start": 691931,
+      "end": 691937,
+      "confidence": 0.8
+    },
+    {
+      "text": "PESELEM",
+      "type": "LICENSE_PLATE",
+      "start": 697782,
+      "end": 697789,
+      "confidence": 1.0
+    },
+    {
+      "text": "PESELEM",
+      "type": "LICENSE_PLATE",
+      "start": 705650,
+      "end": 705657,
+      "confidence": 1.0
+    },
+    {
+      "text": "os.  Całe",
+      "type": "ADDRESS",
+      "start": 769572,
+      "end": 769581,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Jeśli",
+      "type": "ADDRESS",
+      "start": 776817,
+      "end": 776826,
+      "confidence": 0.8
+    },
+    {
+      "text": "ul. Kwiatowa 12",
+      "type": "ADDRESS",
+      "start": 795661,
+      "end": 795676,
+      "confidence": 0.8
+    },
+    {
+      "text": "ulica jest",
+      "type": "ADDRESS",
+      "start": 826855,
+      "end": 826865,
+      "confidence": 0.8
+    },
+    {
+      "text": "ulica wygląda",
+      "type": "ADDRESS",
+      "start": 827306,
+      "end": 827319,
+      "confidence": 0.8
+    },
+    {
+      "text": "osiedle gada",
+      "type": "ADDRESS",
+      "start": 889197,
+      "end": 889209,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Ma",
+      "type": "ADDRESS",
+      "start": 890848,
+      "end": 890854,
+      "confidence": 0.8
+    },
+    {
+      "text": "os.\nPatrz",
+      "type": "ADDRESS",
+      "start": 896396,
+      "end": 896405,
+      "confidence": 0.8
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 897666,
+      "end": 897674,
+      "confidence": 1.0
+    },
+    {
+      "text": "WCZORAJ",
+      "type": "LICENSE_PLATE",
+      "start": 927007,
+      "end": 927014,
+      "confidence": 1.0
+    },
+    {
+      "text": "WSZYSTKO",
+      "type": "LICENSE_PLATE",
+      "start": 957585,
+      "end": 957593,
+      "confidence": 1.0
+    },
+    {
+      "text": "os. Nawet",
+      "type": "ADDRESS",
+      "start": 962346,
+      "end": 962355,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Wczoraj",
+      "type": "ADDRESS",
+      "start": 982656,
+      "end": 982667,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Wiesz",
+      "type": "ADDRESS",
+      "start": 993474,
+      "end": 993483,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Jak",
+      "type": "ADDRESS",
+      "start": 1003258,
+      "end": 1003265,
+      "confidence": 0.8
+    },
+    {
+      "text": "OS. Jestem",
+      "type": "ADDRESS",
+      "start": 1051808,
+      "end": 1051818,
+      "confidence": 0.8
+    },
+    {
+      "text": "ul. Zielonej",
+      "type": "ADDRESS",
+      "start": 1058923,
+      "end": 1058935,
+      "confidence": 0.8
+    },
+    {
+      "text": "JESTEM",
+      "type": "LICENSE_PLATE",
+      "start": 1062519,
+      "end": 1062525,
+      "confidence": 1.0
+    },
+    {
+      "text": "NOWEGO",
+      "type": "LICENSE_PLATE",
+      "start": 1062703,
+      "end": 1062709,
+      "confidence": 1.0
+    },
+    {
+      "text": "os. Sprawdź",
+      "type": "ADDRESS",
+      "start": 1133733,
+      "end": 1133744,
+      "confidence": 0.8
+    },
+    {
+      "text": "15.10.2023",
+      "type": "DATE_OF_BIRTH",
+      "start": 1328683,
+      "end": 1328693,
+      "confidence": 1.0
+    },
+    {
+      "text": "XYZ98129",
+      "type": "LICENSE_PLATE",
+      "start": 1362735,
+      "end": 1362743,
+      "confidence": 1.0
+    },
+    {
+      "text": "os.\nPracuję",
+      "type": "ADDRESS",
+      "start": 1465455,
+      "end": 1465466,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Mój",
+      "type": "ADDRESS",
+      "start": 1468425,
+      "end": 1468432,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Dodatkowo",
+      "type": "ADDRESS",
+      "start": 1469694,
+      "end": 1469707,
+      "confidence": 0.8
+    },
+    {
+      "text": "os. Kierownictwo",
+      "type": "ADDRESS",
+      "start": 1481782,
+      "end": 1481798,
+      "confidence": 0.8
+    },
+    {
+      "text": "osiedle od",
+      "type": "ADDRESS",
+      "start": 1600476,
+      "end": 1600486,
+      "confidence": 0.8
+    },
+    {
+      "text": "GRATIS",
+      "type": "LICENSE_PLATE",
+      "start": 1609552,
+      "end": 1609558,
+      "confidence": 1.0
+    },
+    {
+      "text": "EDYCJA",
+      "type": "LICENSE_PLATE",
+      "start": 1681107,
+      "end": 1681113,
+      "confidence": 1.0
+    }
+  ],
+  "config": {
+    "method": "mask",
+    "language": "pl",
+    "min_confidence": 0.7
+  }
+}

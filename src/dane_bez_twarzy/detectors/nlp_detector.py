@@ -122,12 +122,19 @@ class NLPDetector:
         entities = []
         
         # Mapowanie typów spaCy na nasze typy
+        # Obsługa zarówno angielskich jak i polskich etykiet
         spacy_to_entity_type = {
+            # Angielskie etykiety (en_core_web_*)
             "PER": EntityType.PERSON,
             "PERSON": EntityType.PERSON,
             "ORG": EntityType.ORGANIZATION,
             "LOC": EntityType.LOCATION,
             "GPE": EntityType.LOCATION,
+            # Polskie etykiety (pl_core_news_*)
+            "persName": EntityType.PERSON,
+            "orgName": EntityType.ORGANIZATION,
+            "placeName": EntityType.LOCATION,
+            "geogName": EntityType.LOCATION,
         }
         
         for ent in doc.ents:
