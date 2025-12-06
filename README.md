@@ -195,6 +195,11 @@ dane-bez-twarzy anonymize input.txt -o output.txt --use-nlp --use-llm --llm-api-
 dane-bez-twarzy detect input.txt --use-llm --llm-api-key "klucz" --report report.json
 
 # Tryb szczegółowy (verbose)
+# Flaga -v włącza tryb DEBUG, wyświetlając szczegółowe informacje diagnostyczne:
+# - Postęp wykrywania encji przez każdy detektor
+# - Informacje o przetwarzaniu fragmentów tekstu (chunking) przez LLM
+# - Szczegóły operacji na plikach i katalogach
+# - Przydatne do debugowania i monitorowania procesu anonimizacji
 dane-bez-twarzy anonymize input.txt -o output.txt -v
 
 
