@@ -19,6 +19,7 @@ class EntityType(str, Enum):
     BANK_ACCOUNT = "BANK_ACCOUNT"
     CREDIT_CARD = "CREDIT_CARD"
     ADDRESS = "ADDRESS"
+    DATE = "DATE"  # Ogólna data
     DATE_OF_BIRTH = "DATE_OF_BIRTH"
     ID_CARD = "ID_CARD"  # Dowód osobisty
     PASSPORT = "PASSPORT"
@@ -28,6 +29,11 @@ class EntityType(str, Enum):
     URL = "URL"
     ORGANIZATION = "ORGANIZATION"
     LOCATION = "LOCATION"  # Lokalizacje geograficzne
+    AGE = "AGE"  # Wiek
+    SEX = "SEX"  # Płeć
+    USERNAME = "USERNAME"  # Nazwa użytkownika
+    SECRET = "SECRET"  # Hasła, sekrety
+    JOB_TITLE = "JOB_TITLE"  # Stanowisko pracy
     
 
 class AnonymizationMethod(str, Enum):

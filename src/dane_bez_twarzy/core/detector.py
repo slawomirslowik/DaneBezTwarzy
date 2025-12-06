@@ -43,6 +43,7 @@ class EntityDetector:
         self._regex_detector = None
         self._nlp_detector = None
         self._polish_detector = None
+        self._placeholder_detector = None
     
     @property
     def regex_detector(self):
@@ -71,6 +72,14 @@ class EntityDetector:
             self._polish_detector = PolishDetector(self.config)
         return self._polish_detector
     
+    @property
+    def placeholder_detector(self):
+        """Lazy loading detektora placeholderów."""
+        if self._placeholder_detector is None:
+            from dane_bez_twarzy.detectors.placeholder_detector import PlaceholderDetector
+            self._placeholder_detector = PlaceholderDetector(self.config)
+        return self._placeholder_detector
+    
     def detect(self, text: str) -> List[Entity]:
         """
         Wykrywa wszystkie encje w tekście.
@@ -85,6 +94,9 @@ class EntityDetector:
             return []
         
         entities = []
+        
+        # Wykrywanie placeholderów (najszybsze, najwyższa pewność)
+        entities.extend(self.placeholder_detector.detect(text))
         
         # Wykrywanie przez regex (szybkie)
         entities.extend(self.regex_detector.detect(text))
