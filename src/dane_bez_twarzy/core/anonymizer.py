@@ -25,12 +25,18 @@ class Anonymizer:
         '*** ********, tel: ***********'
     """
     
-    def __init__(self, config: Optional[AnonymizationConfig] = None):
+    def __init__(self, config: Optional[AnonymizationConfig] = None, 
+                 use_llm: bool = False, llm_api_key: Optional[str] = None,
+                 llm_base_url: Optional[str] = None, llm_model_name: Optional[str] = None):
         """
         Inicjalizacja anonimizera.
         
         Args:
             config: Konfiguracja anonimizacji. Jeśli None, użyje domyślnej.
+            use_llm: Czy używać detektora LLM.
+            llm_api_key: Klucz API do LLM (opcjonalny).
+            llm_base_url: URL bazowy API LLM (opcjonalny).
+            llm_model_name: Nazwa modelu LLM (opcjonalny).
         """
         self.config = config or AnonymizationConfig()
         self.logger = setup_logger(
@@ -39,12 +45,20 @@ class Anonymizer:
         )
         
         # Inicjalizacja detektora encji
-        self.detector = EntityDetector(self.config)
+        self.detector = EntityDetector(
+            self.config,
+            use_llm=use_llm,
+            llm_api_key=llm_api_key,
+            llm_base_url=llm_base_url,
+            llm_model_name=llm_model_name
+        )
         
         # Inicjalizacja strategii anonimizacji
         self.strategy = get_strategy(self.config.method, self.config)
         
         self.logger.info(f"Anonimizer zainicjalizowany: metoda={self.config.method.value}")
+        if use_llm:
+            self.logger.info("Detektor LLM włączony")
     
     def anonymize_text(self, text: str) -> str:
         """

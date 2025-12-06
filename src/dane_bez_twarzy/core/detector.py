@@ -29,20 +29,31 @@ class EntityDetector:
     - Własne wzorce użytkownika
     """
     
-    def __init__(self, config: AnonymizationConfig):
+    def __init__(self, config: AnonymizationConfig, use_llm: bool = False,
+                 llm_api_key: Optional[str] = None, llm_base_url: Optional[str] = None,
+                 llm_model_name: Optional[str] = None):
         """
         Inicjalizacja detektora.
         
         Args:
             config: Konfiguracja anonimizacji.
+            use_llm: Czy używać detektora LLM.
+            llm_api_key: Klucz API do LLM (opcjonalny).
+            llm_base_url: URL bazowy API LLM (opcjonalny).
+            llm_model_name: Nazwa modelu LLM (opcjonalny).
         """
         self.config = config
         self.logger = logging.getLogger(__name__)
+        self.use_llm = use_llm
+        self.llm_api_key = llm_api_key
+        self.llm_base_url = llm_base_url
+        self.llm_model_name = llm_model_name
         
         # Lazy loading detektorów
         self._regex_detector = None
         self._nlp_detector = None
         self._polish_detector = None
+        self._llm_detector = None
     
     @property
     def regex_detector(self):
@@ -71,6 +82,22 @@ class EntityDetector:
             self._polish_detector = PolishDetector(self.config)
         return self._polish_detector
     
+    @property
+    def llm_detector(self):
+        """Lazy loading detektora LLM."""
+        if self._llm_detector is None and self.use_llm:
+            try:
+                from dane_bez_twarzy.detectors.llm_detector import LLMDetector
+                self._llm_detector = LLMDetector(
+                    self.config,
+                    api_key=self.llm_api_key,
+                    base_url=self.llm_base_url,
+                    model_name=self.llm_model_name
+                )
+            except ImportError:
+                self.logger.warning("LLM detector niedostępny. Zainstaluj langchain-openai.")
+        return self._llm_detector
+    
     def detect(self, text: str) -> List[Entity]:
         """
         Wykrywa wszystkie encje w tekście.
@@ -96,6 +123,10 @@ class EntityDetector:
         # Wykrywanie przez NLP (wolniejsze, ale bardziej precyzyjne)
         if self.nlp_detector and self.config.use_nlp:
             entities.extend(self.nlp_detector.detect(text))
+        
+        # Wykrywanie przez LLM (bardzo dokładne, ale kosztowne)
+        if self.llm_detector and self.use_llm:
+            entities.extend(self.llm_detector.detect(text))
         
         # Usuń duplikaty i zachowaj te o wyższej pewności
         entities = self._deduplicate_entities(entities)
