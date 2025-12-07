@@ -294,7 +294,7 @@ def create_presentation():
         p.font.size = Pt(16)
         p.space_after = Pt(6)
     
-    # Footer na ostatnim slajdzie
+    # Footer na slajdzie 5
     footer_box = slide5.shapes.add_textbox(
         Inches(0.5), Inches(6.8), Inches(9), Inches(0.5)
     )
@@ -304,6 +304,137 @@ def create_presentation():
     p.font.size = Pt(12)
     p.font.color.rgb = RGBColor(150, 150, 150)
     p.alignment = PP_ALIGN.CENTER
+
+    # ========== SLAJD 6: Komendy CLI ==========
+    slide6 = prs.slides.add_slide(prs.slide_layouts[5])
+    set_background(slide6)
+    add_header(slide6, "Komendy CLI")
+    content6 = slide6.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(9), Inches(4.8))
+    tf6 = content6.text_frame
+    tf6.word_wrap = True
+
+    bullets6 = [
+        "dane-bez-twarzy anonymize input.txt -o output.txt",
+        "dane-bez-twarzy anonymize-dir ./docs -r ./out -m entity",
+        "--use-nlp, --use-llm, --llm-api-key <klucz>",
+        "--add-report raport --report-format html,pdf,json",
+        "--generalization-level low|medium|high; -v dla logów"
+    ]
+    p = tf6.paragraphs[0]
+    p.text = bullets6[0]
+    p.font.size = Pt(20)
+    p.font.bold = True
+    p.font.color.rgb = PRIMARY_COLOR
+    for item in bullets6[1:]:
+        p = tf6.add_paragraph()
+        p.text = item
+        p.level = 1
+        p.font.size = Pt(16)
+
+    # ========== SLAJD 7: NLP vs LLM ==========
+    slide7 = prs.slides.add_slide(prs.slide_layouts[5])
+    set_background(slide7)
+    add_header(slide7, "Porównanie: NLP vs LLM")
+    content7 = slide7.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(9), Inches(4.8))
+    tf7 = content7.text_frame
+    tf7.word_wrap = True
+
+    bullets7 = [
+        "NLP (regex/spaCy): szybkie, tanie, deterministyczne",
+        "LLM: wykrywa kontekst, lepsze dla niejednoznacznych przypadków",
+        "Strategia: łącz wykrycia NLP + LLM, deduplikuj wyniki",
+        "Chunking + mapowanie tokenów zapewnia stabilne pozycje",
+        "Fallback: gdy LLM niedostępne, użyj samych reguł regex"
+    ]
+    p = tf7.paragraphs[0]
+    p.text = bullets7[0]
+    p.font.size = Pt(18)
+    p.font.bold = True
+    p.font.color.rgb = PRIMARY_COLOR
+    for item in bullets7[1:]:
+        p = tf7.add_paragraph()
+        p.text = item
+        p.level = 1
+        p.font.size = Pt(16)
+
+    # ========== SLAJD 8: Moduły Architektury ==========
+    slide8 = prs.slides.add_slide(prs.slide_layouts[5])
+    set_background(slide8)
+    add_header(slide8, "Moduły Architektury")
+    content8 = slide8.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(9), Inches(4.8))
+    tf8 = content8.text_frame
+    tf8.word_wrap = True
+
+    bullets8 = [
+        "Detektory: regex, polish, nlp, llm",
+        "Strategie: mask, entity, pseudonymize, hash, generalize, redact",
+        "Procesory plików: TXT (gotowe), DOCX/PDF/XLSX (plan)",
+        "Raportowanie: HTML (Plotly), PDF, JSON",
+        "Konfiguracja: JSON, walidacja (PESEL/NIP/REGON/karty)"
+    ]
+    p = tf8.paragraphs[0]
+    p.text = bullets8[0]
+    p.font.size = Pt(18)
+    p.font.bold = True
+    p.font.color.rgb = PRIMARY_COLOR
+    for item in bullets8[1:]:
+        p = tf8.add_paragraph()
+        p.text = item
+        p.level = 1
+        p.font.size = Pt(16)
+
+    # ========== SLAJD 9: Roadmap ==========
+    slide9 = prs.slides.add_slide(prs.slide_layouts[5])
+    set_background(slide9)
+    add_header(slide9, "Roadmap")
+    content9 = slide9.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(9), Inches(4.8))
+    tf9 = content9.text_frame
+    tf9.word_wrap = True
+
+    bullets9 = [
+        "Implementacja DOCX/PDF/XLSX w Python i C#",
+        "Integracja produkcyjna LLM (Azure/OpenAI) z audit logiem",
+        "Szablony raportów i metryki jakości (precision/recall)",
+        "Tryb offline z rozbudowanymi regułami i słownikami",
+        "UI web do anonimizacji wsadowej i przeglądu raportów"
+    ]
+    p = tf9.paragraphs[0]
+    p.text = bullets9[0]
+    p.font.size = Pt(18)
+    p.font.bold = True
+    p.font.color.rgb = PRIMARY_COLOR
+    for item in bullets9[1:]:
+        p = tf9.add_paragraph()
+        p.text = item
+        p.level = 1
+        p.font.size = Pt(16)
+
+    # ========== SLAJD 10: Kontakt i Licencja ==========
+    slide10 = prs.slides.add_slide(prs.slide_layouts[5])
+    set_background(slide10)
+    add_header(slide10, "Kontakt i Licencja")
+    content10 = slide10.shapes.add_textbox(Inches(0.5), Inches(1.5), Inches(9), Inches(4.8))
+    tf10 = content10.text_frame
+    tf10.word_wrap = True
+
+    p = tf10.paragraphs[0]
+    p.text = "Projekt: Dane Bez Twarzy"
+    p.font.size = Pt(22)
+    p.font.bold = True
+    p.font.color.rgb = PRIMARY_COLOR
+
+    items10 = [
+        "Autor: Sławomir Słowik",
+        "GitHub: slawomirslowik/DaneBezTwarzy",
+        "Email: semantis@int.pl",
+        "Licencja: MIT",
+        "Wkład: PR-y, zgłoszenia i pomysły mile widziane"
+    ]
+    for item in items10:
+        p = tf10.add_paragraph()
+        p.text = item
+        p.level = 1
+        p.font.size = Pt(18)
     
     # Zapisz prezentację
     output_path = "DaneBezTwarzy_Prezentacja.pptx"
